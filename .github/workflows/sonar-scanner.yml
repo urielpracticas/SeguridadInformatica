@@ -1,0 +1,23 @@
+name: SonarQube Scan
+
+on:
+  push:
+    branches:
+      - main  # Cambia esto por el nombre de tu rama principal
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  sonarqube_scan:
+    name: SonarQube Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+      - uses: actions/checkout@v2
+        with:
+         fetch-depth: 0
+      - uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}  # Necesitas configurar este secreto en la configuración de tu repositorio en GitHub
